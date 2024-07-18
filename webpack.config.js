@@ -5,15 +5,14 @@ module.exports = {
    entry: './src/index.js',
    plugins: [
       new HtmlWebpackPlugin({
-         title: 'The Odin Restaurant',
+         title: 'The Odin ToDo',
          template: './src/index.html',
       }),
    ],
    output: {
       filename: 'main.js',
       path: path.resolve(__dirname, 'dist'),
-      assetModuleFilename: 'img/[hash][ext][query]',
-      // clean: true,
+      assetModuleFilename: 'img/[hash][ext][query]'
    },
    module: {
       rules: [

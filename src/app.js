@@ -1,16 +1,30 @@
 import '../src/css/style.css';
-import ToDoList, { toDoList } from './js/todolist';
-import ItemToDo from './js/item';
+import ScreenContoller from './js/screencontroller.js';
+import DataController from './js/db.js'
 
 class App {
-   static sayHello() {
-      console.log('Hello!');
+
+   static init() {
+      console.log("App запущен");
+      document.addEventListener("DOMContentLoaded", App.onDomContentLoaded);
+
+
    }
+
+   static onDomContentLoaded() {
+      console.log("Dom загружен");
+      App.getDataFromDb();
+      ScreenContoller.onDomContentLoaded();
+   }
+
+   static getDataFromDb() {
+      // console.log('Данные получены');
+      DataController.getDataFromLibrary();
+
+   }
+
+
 }
 
 // Вызов статического метода класса
-App.sayHello();
-
-window.ItemToDo = ItemToDo;
-window.ToDoList = ToDoList;
-window.toDoList = toDoList;
+App.init();

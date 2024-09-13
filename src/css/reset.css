@@ -29,4 +29,8 @@ button, input, textarea {
   font-family: inherit;
   font-size: inherit;
   cursor: pointer;
+  outline: 0;
+  overflow: hidden;
+  border: none;
+  background-color: transparent;
 }

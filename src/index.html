@@ -33,9 +33,12 @@
          </nav>
          <nav class="sidepanel__nav">
             <ul class="sidepanel__filter">
-               <li class="sidepanel__item sidepanel__item--active"><a href="">Personal</a></li>
-               <li class="sidepanel__item"><a href="">Family</a></li>
-               <li class="sidepanel__item"><a href="">Work</a></li>
+               <li class="sidepanel__item sidepanel__item--category sidepanel__item--category--personal"><a
+                     href="">Personal</a></li>
+               <li class="sidepanel__item sidepanel__item--category sidepanel__item--category--family"><a
+                     href="">Family</a></li>
+               <li class="sidepanel__item sidepanel__item--category sidepanel__item--category--work"><a href="">Work</a>
+               </li>
             </ul>
          </nav>
          <nav class="sidepanel__nav">
@@ -55,8 +58,17 @@
             <h1 class="page__title title "></h1>
             <div class="page__inner">
                <ul class="page__list">
+                  <li class="page__todo-item page__todo-item--active todo-item ">
+                     <textarea class="todo-item__title">To finish Odin Curriculum To-Do Project</textarea>
+                     <textarea class="todo-item__description">...</textarea>
+                     <div class="todo-item__calendar"></div>
+                     <div class="todo-item__category"></div>
+                     <div class="todo-item__project"></div>
+                     <div class="todo-item__importance"></div>
+                     <div class="todo-item__save"></div>
+                  </li>
                   <li class="page__todo-item todo-item ">
-                     <div class="todo-item__title"></div>
+                     <textarea class="todo-item__title">Just do something important</textarea>
                      <div class="todo-item__category"></div>
                      <div class="todo-item__project"></div>
                      <div class="todo-item__importance"></div>

@@ -1,4 +1,6 @@
 @import 'reset';
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 
 // variables
@@ -36,8 +38,9 @@ html {
 
 body {
   font-size: 1.8rem;
+  font-weight: 300;
   color: $textColor;
-  font-family: Roboto, sans-serif;
+  font-family: "Roboto", sans-serif;
   &.scroll-lock {
      //overflow: hidden;
      user-select: none
@@ -46,10 +49,9 @@ body {
 
 textarea {
   resize: vertical;
-  background-color: #fff;
-  padding: 5px;
-  border-radius: 5px;
+  
 }
+
 textarea::-webkit-resizer {
   display: none; /* скрывает полоски в веб-кит браузерах */
 }
@@ -72,6 +74,53 @@ textarea::-webkit-resizer {
    margin: 0 auto;
 }
 
+[class*="category"] {
+   
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      line-height: 120%;
+      &::before {
+         content: '';
+         position: relative;
+         background-color: #cad4ca;
+         width: 15px;
+         height: 0.8lh;
+         border-radius: 3px;
+         margin-right: 10px;
+         border-left: 3px solid #a1a1a1;
+         // top:50%;
+      }
+}
+
+[class*="category--personal"] {
+   &::before {
+      content: '';
+      background-color: #f5ea8c;
+      border-left: 3px solid #e7c321;
+   }
+}
+
+/* .sidepanel__item--category--family */
+
+[class*="category--family"] {
+   &::before {
+      content: '';
+      background-color: #cce7c3;
+      border-left: 3px solid #42e721;
+   }
+}
+
+/* .sidepanel__item--category--work */
+
+[class*="category--work"] {
+   &::before {
+      content: '';
+      background-color: #ee9d92;
+      border-left: 3px solid #db205e;
+   }
+}
+
 .title {
   max-width: 100%;
   white-space: wrap;
@@ -92,10 +141,10 @@ textarea::-webkit-resizer {
 
 .btn {
   display: inline-block;
-  //border-radius: 41px;
+  border-radius: 10px;
   //border: 1px solid #000;
-  padding: 10px clamp(10px, 6vw - 2.0rem, 20px);
-  background-color: $primaryColor;
+  padding: 5px clamp(5px, 6vw - 2.0rem, 10px);
+  background-color: $accentColor;
   color: white;
   text-align: center;
   cursor: pointer;
@@ -199,6 +248,7 @@ textarea::-webkit-resizer {
    /* .sidepanel__item */
 
    &__item {
+      
    }
 
    /* .sidepanel__item--active */
@@ -281,10 +331,12 @@ textarea::-webkit-resizer {
 
 
 .page {
+   position: relative;
 
    /* .page__container */
 
    &__container {
+      max-width: 90ch;
    }
 
    /* .page__title */
@@ -306,15 +358,30 @@ textarea::-webkit-resizer {
 
    &__todo-item {
       display: grid;
+      align-items: center;
+      background-color: #ffffffb7;
+      padding: 10px;
+      border-radius: 5px;
       &:not(:last-child) {
-         margin-bottom: 5px;
+         margin-bottom: 10px;
+      }
+      textarea {
+         height: 1lh;
+      }
+      /* .page__todo-item--active */
+
+      &--active {
+         grid-template-rows: 1fr 1fr 1fr;
       }
    }
 
-   /* .page__todo-item--active */
-
-   &__todo-item--active {
+   &__widget {
+      position: absolute;
+      right: 5%;
+      bottom: 5%;
+      font-size: 24px;
    }
+   
 }
 .title {
 }
@@ -323,35 +390,46 @@ textarea::-webkit-resizer {
    /* .todo-item__title */
 
    &__title {
+      grid-column: 1 / 6;
    }
 
    /* .todo-item__description */
 
    &__description {
+      grid-column: 1 / 6;
    }
 
    /* .todo-item__calendar */
 
    &__calendar {
+      grid-row: 3/4;
    }
 
    /* .todo-item__category */
 
    &__category {
+      grid-row: 3/4;
    }
 
    /* .todo-item__project */
 
    &__project {
+      grid-row: 3/4;
+      font-weight: 300;
    }
 
    /* .todo-item__importance */
 
    &__importance {
+      grid-row: 3/4;
    }
 
    /* .todo-item__save */
 
    &__save {
+      grid-row: 3/4;
+   }
+   &__delete { 
+      grid-row: 3/4;
    }
 }

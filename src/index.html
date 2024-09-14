@@ -16,7 +16,7 @@
                <span></span>
             </div>
             <div class="header__title">
-               <h5>Today</h5>
+               <h5>All To-Dos</h5>
             </div>
          </div>
       </header>
@@ -44,7 +44,7 @@
          <nav class="sidepanel__nav">
             <h5><a href="">Projects</a></h5>
             <ul class="sidepanel__projects">
-
+               <li class="sidepanel__item"># The Odin Project</li>
             </ul>
          </nav>
          <nav class="sidepanel__nav">
@@ -61,20 +61,41 @@
                   <li class="page__todo-item page__todo-item--active todo-item ">
                      <textarea class="todo-item__title">To finish Odin Curriculum To-Do Project</textarea>
                      <textarea class="todo-item__description">...</textarea>
-                     <div class="todo-item__calendar"></div>
-                     <div class="todo-item__category"></div>
-                     <div class="todo-item__project"></div>
-                     <div class="todo-item__importance"></div>
-                     <div class="todo-item__save"></div>
+                     <div class="todo-item__calendar">
+                        <i class="far fa-calendar-alt"></i>
+                     </div>
+                     <div class="todo-item__category todo-item__category--personal"></div>
+                     <div class="todo-item__project">
+                        #
+                        <select name="" id="">
+                           <option value=""></option>
+                           <option value="" selected>The Odin Project</option>
+                        </select>
+                     </div>
+                     <div class="todo-item__importance"><i class="fas fa-exclamation"></i></div>
+                     <div class="todo-item__save">
+                        <button class="btn">SAVE</button>
+                     </div>
+                     <div class="todo-item__delete">
+                        <i class="far fa-trash-alt"></i>
+                     </div>
                   </li>
                   <li class="page__todo-item todo-item ">
                      <textarea class="todo-item__title">Just do something important</textarea>
-                     <div class="todo-item__category"></div>
-                     <div class="todo-item__project"></div>
-                     <div class="todo-item__importance"></div>
+                     <div class="todo-item__category  todo-item__category--family"></div>
+                     <div class="todo-item__project">
+                        <select name="" id=""></select>
+                     </div>
+                     <div class="todo-item__importance"><i class="fas fa-exclamation"></i></div>
+                     <div class="todo-item__delete">
+                        <i class="far fa-trash-alt"></i>
+                     </div>
                   </li>
                </ul>
             </div>
+         </div>
+         <div class="page__widget widget">
+            <button class="widget__button btn">+</button>
          </div>
       </main>
 

@@ -6,7 +6,11 @@ export default class DataController {
    static getDataFromLibrary() {
       DataController.getDataFromLs();
 
-      console.log('todo library:', toDoListLibrary.getItemsList());
+      let data = toDoListLibrary.getItemsList();
+
+      console.log('todo library:', data);
+
+      return data;
    }
 
    static getDataFromLs() {

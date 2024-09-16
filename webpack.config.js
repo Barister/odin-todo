@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+   mode: 'development',
    entry: './src/app.js',
    plugins: [
       new HtmlWebpackPlugin({
@@ -10,9 +11,16 @@ module.exports = {
       }),
    ],
    output: {
-      filename: 'main.js',
+      filename: '[name].[contenthash].js',
       path: path.resolve(__dirname, 'dist'),
-      assetModuleFilename: 'img/[hash][ext][query]'
+      assetModuleFilename: 'img/[hash][ext][query]',
+      clean: true,
+   },
+   devServer: {
+      static: './dist',
+      port: 9000,
+      hot: true,
+      open: true,
    },
    module: {
       rules: [
@@ -29,5 +37,13 @@ module.exports = {
             type: 'asset/resource',
          },
       ],
+   },
+   devServer: {
+      static: {
+         directory: path.resolve(__dirname, 'dist'),
+      },
+      port: 9000,
+      hot: true,
+      open: true,
    },
 };

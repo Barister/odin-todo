@@ -74,8 +74,10 @@ textarea::-webkit-resizer {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: fit-content(150px) auto;
   grid-template-rows: 30px auto;
+}
+.wrapper--sidepanel-active {
+  grid-template-columns: fit-content(150px) auto;
 }
 
 [class*=__container] {
@@ -166,9 +168,12 @@ textarea::-webkit-resizer {
 .header__container {
   max-width: none;
   padding: 5px 10px;
+}
+.header__panel {
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 }
 .header__burger {
   display: block;
@@ -208,9 +213,14 @@ textarea::-webkit-resizer {
   transform: scale(0);
 }
 .sidepanel {
+  display: none;
+  width: fit-content(150px);
   grid-column: 1/2;
   padding: 30px 10px;
   text-wrap: nowrap;
+  z-index: 10;
+  top: 30px;
+  background-color: #f8f0fb;
   /* .sidepanel__nav */
   /* .sidepanel__priorities */
   /* .sidepanel__item */
@@ -222,6 +232,9 @@ textarea::-webkit-resizer {
   /* .sidepanel__item--category--work */
   /* .sidepanel__projects */
   /* .sidepanel__notes */
+}
+.sidepanel--active {
+  display: block;
 }
 .sidepanel__nav:not(:last-child) {
   margin-bottom: 10px;
@@ -263,6 +276,7 @@ textarea::-webkit-resizer {
 }
 .page {
   position: relative;
+  grid-column: 2/-1;
   /* .page__container */
   /* .page__title */
   /* .page__inner */
@@ -320,7 +334,8 @@ textarea::-webkit-resizer {
   grid-row: 1/2;
   height: 14px;
   width: 14px;
-  border: 2px solid #8075ff;
+  border: 2px solid #b3acff;
+  border-radius: 4px;
   justify-self: center;
 }
 .todo-item__title {

@@ -13,14 +13,15 @@ class App {
 
    static onDomContentLoaded() {
       console.log("Dom загружен");
-      App.getDataFromDb();
       ScreenContoller.onDomContentLoaded();
+      App.getDataFromDb();
    }
 
    static getDataFromDb() {
-      // console.log('Данные получены');
-      DataController.getDataFromLibrary();
+      console.log('Данные получены:', DataController.getDataFromLibrary());
+      const dataFromDb = DataController.getDataFromLibrary();
 
+      ScreenContoller.renderDataOnScreen(dataFromDb);
    }
 
 

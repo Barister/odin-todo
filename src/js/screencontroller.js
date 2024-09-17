@@ -7,7 +7,7 @@ export default class ScreenContoller {
       this.pageHeader = document.querySelector('.header');
       this.pageContainer = document.querySelector('.page__container');
       this.sidePanel = document.querySelector('.sidepanel');
-      this.headerPanel = document.querySelector('.header__panel');
+      this.headerBurger = document.querySelector('.header__burger');
    }
 
    static onDomContentLoaded() {
@@ -17,7 +17,8 @@ export default class ScreenContoller {
    }
 
    static handleEvents() {
-      this.headerPanel.addEventListener('click', () => {
+      this.headerBurger.addEventListener('click', () => {
+         this.headerBurger.classList.toggle('header__burger--active');
          this.sidePanel.classList.toggle('sidepanel--active');
          this.wrapper.classList.toggle('wrapper--sidepanel-active');
       });

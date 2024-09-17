@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
    mode: 'development',
+   devtool: 'source-map',
    entry: './src/app.js',
    plugins: [
       new HtmlWebpackPlugin({
@@ -11,7 +12,7 @@ module.exports = {
       }),
    ],
    output: {
-      filename: '[name].[contenthash].js',
+      filename: 'main.js',
       path: path.resolve(__dirname, 'dist'),
       assetModuleFilename: 'img/[hash][ext][query]',
       clean: true,

@@ -62,7 +62,7 @@ textarea::-webkit-resizer {
    height: 100%;
    width: 100%;
    display: grid;
-   // grid-template-columns: fit-content(150px) auto;
+   grid-template-columns: 0px auto;
    grid-template-rows: 30px auto;
    &--sidepanel-active {
       grid-template-columns: fit-content(150px) auto;
@@ -211,15 +211,15 @@ textarea::-webkit-resizer {
 			& span{
 				top: 6px;
 			}
-			&.active:before{
+			&--active:before{
 				transform: rotate(45deg);
-				top: 9px;
+				top: 6px;
 			}
-			&.active:after{
+			&--active:after{
 				transform: rotate(-45deg);
-				bottom: 9px;
+				bottom: 6px;
 			}
-			&.active span{
+			&--active span{
 				transform: scale(0);
 			}
    }
@@ -232,18 +232,21 @@ textarea::-webkit-resizer {
 
 
 .sidepanel {
-   display: none;
    // position: absolute;
-   width: fit-content(150px);
+   width: fit-content;
+   max-width: 165px;
    grid-column: 1 / 2;
    padding: 30px 10px;
    text-wrap: nowrap;
    z-index: 10;
    top: 30px;
    background-color: $backgroundColor;
+   transform: translateX(-100%);
+   transition: all 0.3s ease 0s;
 
    &--active {
-      display: block;
+      width: fit-content;
+      transform: translateX(0);
    }
 
    /* .sidepanel__nav */

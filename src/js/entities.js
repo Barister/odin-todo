@@ -1,21 +1,23 @@
 export default class ItemToDo {
-   constructor(id, title, description, dueDate, category, priority, status) {
+   constructor(id, title, description, dueDate, category, project, priority, status) {
       this.id = id,
          this.title = title,
          this.description = description,
          this.dueDate = dueDate,
          this.category = category,
+         this.project = project,
          this.priority = priority,
          this.status = status
    }
 }
 
 export class Project {
-   constructor(id, title, description, category) {
+   constructor(id, title, description, category, status) {
       this.id = id,
          this.title = title,
          this.description = description,
-         this.category = category
+         this.category = category,
+         this.status = status
    }
 }
 

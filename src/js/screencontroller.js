@@ -13,15 +13,16 @@ export default class ScreenContoller {
    static onDomContentLoaded() {
       this.cacheDom();
       ScreenContoller.handleEvents();
-      // allToDosLoad();
    }
 
    static handleEvents() {
-      this.headerBurger.addEventListener('click', () => {
-         this.headerBurger.classList.toggle('header__burger--active');
-         this.sidePanel.classList.toggle('sidepanel--active');
-         this.wrapper.classList.toggle('wrapper--sidepanel-active');
-      });
+      this.headerBurger.addEventListener('click', (event) => this.sidePanelManipulation(event));
+   }
+
+   static sidePanelManipulation(event) {
+      this.headerBurger.classList.toggle('header__burger--active');
+      this.sidePanel.classList.toggle('sidepanel--active');
+      this.wrapper.classList.toggle('wrapper--sidepanel-active');
    }
 
    static renderDataOnScreen(dataFromDb) {

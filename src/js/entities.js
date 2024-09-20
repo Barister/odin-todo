@@ -29,8 +29,9 @@ export class Note {
 }
 
 export class Category {
-   constructor(id, title) {
+   constructor(id, title, style) {
       this.id = id,
-         this.title = title
+         this.title = title,
+         this.style = style
    }
 }

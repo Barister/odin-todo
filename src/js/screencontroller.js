@@ -1,4 +1,5 @@
 import allToDosLoad from "./alltodosView";
+import { ProjectsList } from "./library";
 
 export default class ScreenContoller {
 
@@ -7,7 +8,9 @@ export default class ScreenContoller {
       this.pageHeader = document.querySelector('.header');
       this.pageContainer = document.querySelector('.page__container');
       this.sidePanel = document.querySelector('.sidepanel');
+      this.sidePanelProjects = document.querySelector('.sidepanel__projects');
       this.headerBurger = document.querySelector('.header__burger');
+
    }
 
    static onDomContentLoaded() {
@@ -16,10 +19,11 @@ export default class ScreenContoller {
    }
 
    static handleEvents() {
-      this.headerBurger.addEventListener('click', (event) => this.sidePanelManipulation(event));
+      this.headerBurger.addEventListener('click', (event) => this.sidePanelToggle(event));
+
    }
 
-   static sidePanelManipulation(event) {
+   static sidePanelToggle(event) {
       this.headerBurger.classList.toggle('header__burger--active');
       this.sidePanel.classList.toggle('sidepanel--active');
       this.wrapper.classList.toggle('wrapper--sidepanel-active');
@@ -27,8 +31,33 @@ export default class ScreenContoller {
 
    static renderDataOnScreen(dataFromDb) {
       console.log('dataFromDb:', dataFromDb);
-      console.log('element до вызова allToDosLoad:', this.pageContainer);
+
+      this.renderProjectsToSidepanel(dataFromDb.projects);
       allToDosLoad(this.pageContainer, dataFromDb);
    }
+
+   static renderProjectsToSidepanel(projects) {
+
+      projects.forEach(element => {
+         if (element.id !== 1) {
+            const projectItem = document.createElement('li');
+            projectItem.classList.add('sidepanel__item');
+
+            const projectAnchor = document.createElement('a');
+            projectAnchor.textContent = `# ${element.title}`;
+            projectAnchor.href = '';
+
+            projectItem.appendChild(projectAnchor);
+
+            this.sidePanelProjects.appendChild(projectItem);
+         }
+      });
+   }
+
+
+
+
+
+
 
 }

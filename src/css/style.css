@@ -245,6 +245,9 @@ textarea::-webkit-resizer {
 .sidepanel__nav:not(:last-child) {
   margin-bottom: 10px;
 }
+.sidepanel__nav a:hover {
+  font-weight: 400;
+}
 .sidepanel__filter {
   display: grid;
   align-items: center;
@@ -374,4 +377,13 @@ textarea::-webkit-resizer {
 }
 .todo-item__blanket {
   width: 63.34px;
+}
+.fa-exclamation {
+  cursor: pointer;
+}
+.fa-exclamation::before {
+  color: #f4f3fd;
+}
+.fa-exclamation--important::before, .fa-exclamation:hover::before {
+  color: #db205e;
 }

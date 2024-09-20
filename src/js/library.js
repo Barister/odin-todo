@@ -13,8 +13,8 @@ export default class ToDoList {
       return this.#itemsCounter;
    }
 
-   createItem(id, title, description, dueDate, priority, status) {
-      let item = new ItemToDo(id, title, description, dueDate, priority, status);
+   createItem(id, title, description, dueDate, category, project, priority, status) {
+      let item = new ItemToDo(id, title, description, dueDate, category, project, priority, status);
       return item;
    }
 
@@ -25,9 +25,9 @@ export default class ToDoList {
 
 }
 
-const category1 = new Category(1, 'Personal');
-const category2 = new Category(2, 'Family');
-const category3 = new Category(3, 'Work');
+const category1 = new Category(1, 'Personal', 'category--personal');
+const category2 = new Category(2, 'Family', 'category--family');
+const category3 = new Category(3, 'Work', 'category--work');
 
 export const categories = [category1, category2, category3];
 
@@ -36,6 +36,7 @@ export class ProjectsList {
    #projectsCounter = 0;
 
    getProjectsList() {
+      console.log('Projects:', this.#projectsList);
       return this.#projectsList;
    }
 
@@ -44,8 +45,8 @@ export class ProjectsList {
       return this.#projectsCounter;
    }
 
-   createProject(id, title, description, status) {
-      let project = new Project(id, title, description, status);
+   createProject(id, title, description, category, status) {
+      let project = new Project(id, title, description, category, status);
       return project;
    }
 
@@ -59,15 +60,14 @@ const toDoListLibrary = new ToDoList();
 const projectsLibrary = new ProjectsList();
 
 
-//toDoListLibrary.createItem(1, 'New Task', 'Description of the task', 'pending', true);
+toDoListLibrary.addItemToList(toDoListLibrary.createItem(toDoListLibrary.getItemsCounter(), 'To finish all todos page', 'Description of the task', 'pending', category1, 2, true, true));
 
-//console.log(item);
+toDoListLibrary.addItemToList(toDoListLibrary.createItem(toDoListLibrary.getItemsCounter(), 'Go to the park', 'Description of the task', 'pending', category2, 3, false, true));
 
+projectsLibrary.addProjectToList(projectsLibrary.createProject(projectsLibrary.getProjectsCounter(), '', '', null, true));
 
-toDoListLibrary.addItemToList(toDoListLibrary.createItem(toDoListLibrary.getItemsCounter(), 'To finish all todos page', 'Description of the task', 'pending', 0, 0, true));
+projectsLibrary.addProjectToList(projectsLibrary.createProject(projectsLibrary.getProjectsCounter(), 'The Odin Project', '', 1, true));
 
-projectsLibrary.addProjectToList(projectsLibrary.createProject(projectsLibrary.getProjectsCounter(), '', '', 0, true));
+projectsLibrary.addProjectToList(projectsLibrary.createProject(projectsLibrary.getProjectsCounter(), 'Family journey', '', 2, true));
 
-
-
-export { toDoListLibrary };
+export { toDoListLibrary, projectsLibrary };

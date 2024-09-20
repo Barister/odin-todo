@@ -255,6 +255,11 @@ textarea::-webkit-resizer {
       &:not(:last-child) {
          margin-bottom: 10px;
       }
+      a {
+         &:hover {
+            font-weight: 400;
+         }
+      }
    }
 
    /* .sidepanel__priorities */
@@ -507,5 +512,20 @@ textarea::-webkit-resizer {
 
    &__delete { 
       // grid-row: 3/4;
+   }
+}
+
+
+//awesome fonts
+
+.fa-exclamation {
+   cursor: pointer;
+   &::before {
+      color: #f4f3fd;
+   }
+   &--important, &:hover {
+      &::before {
+         color: #db205e;
+      }
    }
 }

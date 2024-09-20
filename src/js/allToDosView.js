@@ -2,9 +2,10 @@ import ScreenContoller from "./screencontroller";
 
 export default function allToDosLoad(elementDOM, content) {
 
-   console.log('загружена страница All ToDos:', content);
+   // console.log('загружена страница All ToDos:', content);
 
-   console.log('elementDOM:', elementDOM);
+   // console.log('elementDOM:', elementDOM);
+
 
    const pageInner = document.createElement('div');
    pageInner.classList.add('page__inner');
@@ -12,24 +13,30 @@ export default function allToDosLoad(elementDOM, content) {
    const pageList = document.createElement('ul');
    pageList.classList.add('page__list');
 
-   for (let i = 0; i < content.length; i++) {
+   for (let i = 0; i < content.items.length; i++) {
 
       const pageTodoItem = document.createElement('li');
       pageTodoItem.classList.add('page__todo-item', 'todo-item');
-      pageTodoItem.setAttribute('id', content[i].id);
+      pageTodoItem.setAttribute('id', content.items[i].id);
 
       const todoItemDone = document.createElement('div');
       todoItemDone.classList.add('todo-item__done');
 
       const todoItemTitle = document.createElement('textarea');
       todoItemTitle.classList.add('todo-item__title');
-      todoItemTitle.textContent = `${content[i].title}`;
+      todoItemTitle.textContent = `${content.items[i].title}`;
 
       const todoItemImportanceDiv = document.createElement('div');
       todoItemImportanceDiv.classList.add('todo-item__importance');
 
       const todoItemImportanceIcon = document.createElement('i');
+
+
+
       todoItemImportanceIcon.classList.add('fas', 'fa-exclamation');
+      if (content.items[i].priority) {
+         todoItemImportanceIcon.classList.add('fa-exclamation--important');
+      }
 
       todoItemImportanceDiv.appendChild(todoItemImportanceIcon);
 
@@ -37,7 +44,7 @@ export default function allToDosLoad(elementDOM, content) {
       todoItemPanel.classList.add('todo-item__panel');
 
       const todoItemCategory = document.createElement('div');
-      todoItemCategory.classList.add('todo-item__category', 'todo-item__category--family');
+      todoItemCategory.classList.add('todo-item__category', `todo-item__${content.items[i].category.style}`);
 
       const todoItemProject = document.createElement('div');
       todoItemProject.classList.add('todo-item__project');
@@ -45,12 +52,15 @@ export default function allToDosLoad(elementDOM, content) {
 
       const todoItemProjectSelect = document.createElement('select');
 
-      const todoItemProjectSelectOption1 = document.createElement('option');
-
-      const todoItemProjectSelectOption2 = document.createElement('option');
-      todoItemProjectSelectOption2.textContent = 'The Odin Project';
-
-      todoItemProjectSelect.append(todoItemProjectSelectOption1, todoItemProjectSelectOption2);
+      content.projects.forEach(element => {
+         // console.log(element);
+         const todoItemProjectSelectOption = document.createElement('option');
+         if (content.items[i].project === element.id) {
+            todoItemProjectSelectOption.selected = true;
+         }
+         todoItemProjectSelectOption.textContent = element.title;
+         todoItemProjectSelect.append(todoItemProjectSelectOption);
+      });
 
       todoItemProject.appendChild(todoItemProjectSelect);
 

@@ -305,10 +305,15 @@ textarea::-webkit-resizer {
   padding: 10px;
   border-radius: 5px;
   gap: 5px;
+  transition: all 0.4s ease;
+  cursor: pointer;
   /* .page__todo-item--active */
 }
 .page__todo-item:not(:last-child) {
   margin-bottom: 10px;
+}
+.page__todo-item:hover {
+  box-shadow: 0px 0px 3px 2px #cad4ca;
 }
 .page__widget {
   position: absolute;

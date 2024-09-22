@@ -1,5 +1,5 @@
 import '../src/css/style.css';
-import ScreenContoller from './js/screencontroller.js';
+import ScreenContoller from './js/screenController.js';
 import DataController from './js/db.js'
 
 class App {

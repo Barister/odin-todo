@@ -395,9 +395,15 @@ textarea::-webkit-resizer {
       padding: 10px;
       border-radius: 5px;
       gap: 5px;
+      transition: all 0.4s ease;
+      cursor: pointer;
       &:not(:last-child) {
          margin-bottom: 10px;
          // height: 1lh;
+      }
+      &:hover {
+         // border: 1px solid $accentColor;
+         box-shadow: 0px 0px 3px 2px $secondaryColor;
       }
 
       /* .page__todo-item--active */

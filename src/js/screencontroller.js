@@ -1,4 +1,4 @@
-import allToDosLoad from "./alltodosView";
+import allTodos from "./allToDosController";
 import { ProjectsList } from "./library";
 
 export default class ScreenContoller {
@@ -33,7 +33,8 @@ export default class ScreenContoller {
       console.log('dataFromDb:', dataFromDb);
 
       this.renderProjectsToSidepanel(dataFromDb.projects);
-      allToDosLoad(this.pageContainer, dataFromDb);
+
+      allTodos.renderPage(this.pageContainer, dataFromDb);
    }
 
    static renderProjectsToSidepanel(projects) {
@@ -53,11 +54,5 @@ export default class ScreenContoller {
          }
       });
    }
-
-
-
-
-
-
-
 }
+

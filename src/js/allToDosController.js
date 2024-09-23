@@ -39,6 +39,14 @@ function allToDosController() {
          const todoItemPanel = document.createElement('div');
          todoItemPanel.classList.add('todo-item__panel');
 
+         const todoItemCalendarDiv = document.createElement('div');
+         todoItemCalendarDiv.classList.add('todo-item__calendar');
+
+         const todoItemCalendarIcon = document.createElement('i');
+         todoItemCalendarIcon.classList.add('far', 'fa-calendar-alt');
+
+         todoItemCalendarDiv.appendChild(todoItemCalendarIcon);
+
          const todoItemCategory = document.createElement('div');
          todoItemCategory.classList.add('todo-item__category', `todo-item__${content.items[i].category.style}`);
 
@@ -72,7 +80,7 @@ function allToDosController() {
 
          todoItemDeleteDiv.appendChild(todoItemDeleteIcon);
 
-         todoItemPanel.append(todoItemCategory, todoItemProject, todoItemBlanket, todoItemDeleteDiv);
+         todoItemPanel.append(todoItemCalendarDiv, todoItemCategory, todoItemProject, todoItemBlanket, todoItemDeleteDiv);
 
          pageTodoItem.append(todoItemDone, todoItemTitle, todoItemImportanceDiv, todoItemPanel);
 
@@ -90,40 +98,73 @@ function allToDosController() {
 
    const handleEvents = function () {
 
-      console.log('handle events запустился');
+      // console.log('handle events запустился');
 
       const todoItemAll = document.querySelectorAll('.page__todo-item');
 
       todoItemAll.forEach(element => {
-         console.log('click на элеменмент', element);
-         element.addEventListener('click', () => {
-            element.classList.toggle('page__todo-item--active');
+         // console.log('click на элеменмент', element);
+         element.addEventListener('click', (event) => {
 
-            const todoItemTitle = element.querySelector('.todo-item__title');
-            const todoItemPanel = element.querySelector('.todo-item__panel');
-            const todoItemDeleteDiv = element.querySelector('.todo-item__delete');
+            todoItemAll.forEach(item => {
+               collapseToDoCard(item);
+            });
 
-            const todoItemDescription = document.createElement('textarea');
-            todoItemDescription.textContent = 'Description of the item';
-            todoItemDescription.classList.add('todo-item__description');
-            // todoItemTitle.textContent = `${content.items[i].description}`;
-
-            todoItemTitle.insertAdjacentElement('afterend', todoItemDescription);
-
-            const todoItemSaveDiv = document.querySelector('.todo-item__blanket');
-            todoItemSaveDiv.className = 'todo-item__save';
-            const todoItemSaveButton = document.createElement('button');
-            todoItemSaveButton.classList.add('btn');
-            todoItemSaveButton.textContent = 'SAVE';
-
-            todoItemSaveDiv.appendChild(todoItemSaveButton);
-
-            // todoItemPanel.insertBefore(todoItemSaveDiv, todoItemDeleteDiv);
-
+            expandToDoCard(event.currentTarget);
 
 
          });
       })
+
+      function expandToDoCard(element) {
+         element.classList.add('page__todo-item--active');
+
+         const todoItemTitle = element.querySelector('.todo-item__title');
+         const todoItemPanel = element.querySelector('.todo-item__panel');
+         const todoItemDeleteDiv = element.querySelector('.todo-item__delete');
+
+         const todoItemDescription = document.createElement('textarea');
+         todoItemDescription.textContent = 'Description of the item';
+         todoItemDescription.classList.add('todo-item__description');
+         // todoItemTitle.textContent = `${content.items[i].description}`;
+
+         todoItemTitle.insertAdjacentElement('afterend', todoItemDescription);
+
+         const todoItemSaveDiv = document.createElement('div');
+         todoItemSaveDiv.className = 'todo-item__save';
+         const todoItemSaveButton = document.createElement('button');
+         todoItemSaveButton.classList.add('btn');
+         todoItemSaveButton.textContent = 'SAVE';
+
+         todoItemSaveDiv.appendChild(todoItemSaveButton);
+
+         todoItemSaveDiv.insertAdjacentElement('beforebegin', todoItemDeleteDiv)
+
+         // todoItemPanel.insertBefore(todoItemSaveDiv, todoItemDeleteDiv);
+      }
+
+      function collapseToDoCard(element) {
+         element.classList.remove('page__todo-item--active');
+
+         const todoItemDescription = element.querySelector('.todo-item__description');
+         if (todoItemDescription) {
+            todoItemDescription.remove();
+         }
+
+         const todoItemSaveDiv = element.querySelector('.todo-item__save');
+         if (todoItemSaveDiv) {
+            todoItemSaveDiv.remove();
+         }
+
+         //const todoItemPanel = element.querySelector('.todo-item__panel');
+         const todoItemDeleteDiv = document.querySelector('.todo-item__delete');
+
+         const todoItemBlanket = document.createElement('div');
+         todoItemBlanket.classList.add('todo-item__blanket');
+
+         todoItemBlanket.insertAdjacentElement('beforebegin', todoItemDeleteDiv);
+
+      }
 
    }
 

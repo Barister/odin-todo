@@ -120,8 +120,9 @@ function allToDosController() {
          element.classList.add('page__todo-item--active');
 
          const todoItemTitle = element.querySelector('.todo-item__title');
-         const todoItemPanel = element.querySelector('.todo-item__panel');
+         const todoItemBlanket = element.querySelector('.todo-item__blanket');
          const todoItemDeleteDiv = element.querySelector('.todo-item__delete');
+
 
          const todoItemDescription = document.createElement('textarea');
          todoItemDescription.textContent = 'Description of the item';
@@ -138,7 +139,11 @@ function allToDosController() {
 
          todoItemSaveDiv.appendChild(todoItemSaveButton);
 
-         todoItemSaveDiv.insertAdjacentElement('beforebegin', todoItemDeleteDiv)
+         if (todoItemBlanket) {
+            todoItemBlanket.remove();
+         }
+
+         todoItemDeleteDiv.insertAdjacentElement('beforebegin', todoItemSaveDiv);
 
          // todoItemPanel.insertBefore(todoItemSaveDiv, todoItemDeleteDiv);
       }
@@ -157,12 +162,19 @@ function allToDosController() {
          }
 
          //const todoItemPanel = element.querySelector('.todo-item__panel');
-         const todoItemDeleteDiv = document.querySelector('.todo-item__delete');
+         const todoItemDeleteDiv = element.querySelector('.todo-item__delete');
 
-         const todoItemBlanket = document.createElement('div');
-         todoItemBlanket.classList.add('todo-item__blanket');
+         if (!element.querySelector('.todo-item__blanket')) {
 
-         todoItemBlanket.insertAdjacentElement('beforebegin', todoItemDeleteDiv);
+            console.log('blanket нет');
+
+            const todoItemBlanket = document.createElement('div');
+            todoItemBlanket.classList.add('todo-item__blanket');
+
+            todoItemDeleteDiv.insertAdjacentElement('beforebegin', todoItemBlanket);
+         }
+
+
 
       }
 

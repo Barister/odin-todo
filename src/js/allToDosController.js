@@ -103,8 +103,13 @@ function allToDosController() {
       const todoItemAll = document.querySelectorAll('.page__todo-item');
 
       todoItemAll.forEach(element => {
-         // console.log('click на элеменмент', element);
+
          element.addEventListener('click', (event) => {
+
+            if (event.target.classList.contains('fa-trash-alt')) {
+               verifyDeleteTodoCard(event.currentTarget);
+               return;
+            }
 
             todoItemAll.forEach(item => {
                collapseToDoCard(item);
@@ -166,17 +171,63 @@ function allToDosController() {
 
          if (!element.querySelector('.todo-item__blanket')) {
 
-            console.log('blanket нет');
+            // console.log('blanket нет');
 
             const todoItemBlanket = document.createElement('div');
             todoItemBlanket.classList.add('todo-item__blanket');
 
             todoItemDeleteDiv.insertAdjacentElement('beforebegin', todoItemBlanket);
          }
-
-
-
       }
+
+      function verifyDeleteTodoCard(element) {
+
+         const popup = document.createElement('div');
+         popup.classList.add('popup');
+
+         const popupBlock = document.createElement('div');
+         popupBlock.classList.add('popup__block');
+
+         const popupText = document.createElement('p');
+         popupText.classList.add('popup__text');
+         popupText.textContent = 'Delete this todo card?';
+
+         const popupChoose = document.createElement('div');
+         popupChoose.classList.add('popup__choose');
+
+         const popupCancelBtn = document.createElement('button');
+         popupCancelBtn.classList.add('popup__cancel', 'btn', 'btn--grey')
+         popupCancelBtn.textContent = 'Cancel';
+
+         const popupDeleteBtn = document.createElement('button');
+         popupDeleteBtn.classList.add('popup__delete', 'btn')
+         popupDeleteBtn.textContent = 'Delete';
+
+         popupChoose.append(popupCancelBtn, popupDeleteBtn);
+
+         popupBlock.append(popupText, popupChoose);
+
+         popup.appendChild(popupBlock);
+
+         const main = document.querySelector('main');
+
+         main.appendChild(popup);
+
+         handleClicks();
+
+         function handleClicks() {
+            popup.addEventListener('click', (event) => {
+               if (event.target.classList.contains('popup__delete')) {
+
+                  console.log('Картока удалена!');
+               } else if (!event.target.classList.contains('popup__block') || event.target.classList.contains('popup__cancel')) {
+                  popup.remove();
+               }
+            })
+         }
+
+
+      };
 
    }
 

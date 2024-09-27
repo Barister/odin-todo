@@ -8,6 +8,7 @@
 $pc: 1440px;
 $tablets: 991.98px;
 $mobile: 767.98px;
+$fullBurger: 600px;
 $smallMobile: 479.98px;
 
 
@@ -66,6 +67,9 @@ textarea::-webkit-resizer {
    grid-template-rows: 30px auto;
    &--sidepanel-active {
       grid-template-columns: fit-content(150px) auto;
+      @media (max-width: $fullBurger) {
+         grid-template-columns: 0px auto;
+      }
    }
 }
 
@@ -191,43 +195,43 @@ textarea::-webkit-resizer {
    /* .header__burger */
 
    &__burger {
-      display: block;
-			position: relative;
-			width: 20px;
-			height: 14px;
-			z-index: 3;
-			left: 0px;
-
-			&:before,
-			&:after, span{
-				content: '';
-				background-color: $burgerColor;
-				position: absolute;
-				width: 100%;
-				height: 2px;
-				left: 0;
-				transition: all 0.3s ease 0s;
-			}
-			&:before{
-				top: 0;
-			}
-			&:after{
-				bottom: 0;
-			}
-			& span{
-				top: 6px;
-			}
-			&--active:before{
-				transform: rotate(45deg);
-				top: 6px;
-			}
-			&--active:after{
-				transform: rotate(-45deg);
-				bottom: 6px;
-			}
-			&--active span{
-				transform: scale(0);
-			}
+        display: block;
+		position: relative;
+		width: 20px;
+		height: 14px;
+		z-index: 3;
+		left: 0px;
+       
+		&:before,
+		&:after, span{
+			content: '';
+			background-color: $burgerColor;
+			position: absolute;
+			width: 100%;
+			height: 2px;
+			left: 0;
+			transition: all 0.3s ease 0s;
+		}
+		&:before{
+			top: 0;
+		}
+		&:after{
+			bottom: 0;
+		}
+		& span{
+			top: 6px;
+		}
+		&--active:before{
+			transform: rotate(45deg);
+			top: 6px;
+		}
+		&--active:after{
+			transform: rotate(-45deg);
+			bottom: 6px;
+		}
+		&--active span{
+			transform: scale(0);
+		}
    }
 
    /* .header__title */
@@ -249,10 +253,19 @@ textarea::-webkit-resizer {
    background-color: $backgroundColor;
    transform: translateX(-100%);
    transition: all 0.3s ease 0s;
+   overflow: hidden;
+  
+   @media (max-width: $smallMobile) {
+      width: 100%;
+      max-width: unset;
+   }
 
    &--active {
       width: fit-content;
       transform: translateX(0);
+      @media (max-width: $smallMobile) {
+         width: 100vw;
+      }
    }
 
    /* .sidepanel__nav */
@@ -262,6 +275,7 @@ textarea::-webkit-resizer {
          margin-bottom: 10px;
       }
       a {
+         
          &:hover {
             font-weight: 400;
          }
@@ -281,6 +295,7 @@ textarea::-webkit-resizer {
    /* .sidepanel__item */
 
    &__item {
+      text-overflow: ellipsis;
       
    }
 
@@ -295,6 +310,8 @@ textarea::-webkit-resizer {
 		/* .sidepanel__item */
 
 		&__item {
+         overflow: hidden;
+         text-overflow: ellipsis;
 		}
 
 		/* .sidepanel__item--category */
@@ -503,6 +520,9 @@ textarea::-webkit-resizer {
       // grid-row: 3/4;
       select, option {
          font-weight: 300;
+         max-width: 153px;
+         overflow: hidden;
+         text-overflow: ellipsis;
       }
       
    }

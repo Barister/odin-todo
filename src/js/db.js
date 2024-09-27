@@ -17,8 +17,15 @@ export default class DataController {
       return data;
    }
 
-   static sendDataToLs() {
+   static sendDataToLs(action, entity, element) {
       let dataFromLibrary = this.getDataFromLibrary();
+
+      if (action == 'remove') {
+         toDoListLibrary.removeItemFromList(element);
+      }
+
+
+      console.log('ОТправляем новые данные в локальное хранилище!');
 
    }
 

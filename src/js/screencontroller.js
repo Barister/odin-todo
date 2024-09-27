@@ -1,5 +1,6 @@
 import allTodos from "./allToDosController";
 import { ProjectsList } from "./library";
+import App from '../app';
 
 export default class ScreenContoller {
 
@@ -10,7 +11,7 @@ export default class ScreenContoller {
       this.sidePanel = document.querySelector('.sidepanel');
       this.sidePanelProjects = document.querySelector('.sidepanel__projects');
       this.headerBurger = document.querySelector('.header__burger');
-
+      this.widgetButton = document.querySelector('.widget__button');
    }
 
    static onDomContentLoaded() {
@@ -20,6 +21,7 @@ export default class ScreenContoller {
 
    static handleEvents() {
       this.headerBurger.addEventListener('click', (event) => this.sidePanelToggle(event));
+
 
    }
 
@@ -53,6 +55,10 @@ export default class ScreenContoller {
             this.sidePanelProjects.appendChild(projectItem);
          }
       });
+   }
+
+   static sendChangesToApp(action, entity, data) {
+      App.updateDb(action, entity, data);
    }
 }
 

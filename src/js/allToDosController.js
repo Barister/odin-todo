@@ -1,237 +1,247 @@
 import ScreenContoller from "./screenController";
+import { createPopup } from "./popup";
+import components from "./componentFactory";
 
 function allToDosController() {
 
    const renderPage = function (elementDOM, content) {
+      const pageInner = createPageInner();
+      const pageList = createPageList(content.items, content.projects);
+
+      pageInner.appendChild(pageList);
+      elementDOM.appendChild(pageInner);
+
+      attachEventListeners();
+   };
+
+   function createPageInner() {
       const pageInner = document.createElement('div');
       pageInner.classList.add('page__inner');
+      return pageInner;
+   }
 
+   function createPageList(items, projects) {
       const pageList = document.createElement('ul');
       pageList.classList.add('page__list');
 
-      for (let i = 0; i < content.items.length; i++) {
+      items.forEach(item => {
+         const todoItem = createTodoItem(item, projects);
+         pageList.appendChild(todoItem);
+      });
 
-         const pageTodoItem = document.createElement('li');
-         pageTodoItem.classList.add('page__todo-item', 'todo-item');
-         pageTodoItem.setAttribute('id', content.items[i].id);
-
-         const todoItemDone = document.createElement('div');
-         todoItemDone.classList.add('todo-item__done');
-
-         const todoItemTitle = document.createElement('textarea');
-         todoItemTitle.classList.add('todo-item__title');
-         todoItemTitle.textContent = `${content.items[i].title}`;
-
-         const todoItemImportanceDiv = document.createElement('div');
-         todoItemImportanceDiv.classList.add('todo-item__importance');
-
-         const todoItemImportanceIcon = document.createElement('i');
-
-
-
-         todoItemImportanceIcon.classList.add('fas', 'fa-exclamation');
-         if (content.items[i].priority) {
-            todoItemImportanceIcon.classList.add('fa-exclamation--important');
-         }
-
-         todoItemImportanceDiv.appendChild(todoItemImportanceIcon);
-
-         const todoItemPanel = document.createElement('div');
-         todoItemPanel.classList.add('todo-item__panel');
-
-         const todoItemCalendarDiv = document.createElement('div');
-         todoItemCalendarDiv.classList.add('todo-item__calendar');
-
-         const todoItemCalendarIcon = document.createElement('i');
-         todoItemCalendarIcon.classList.add('far', 'fa-calendar-alt');
-
-         todoItemCalendarDiv.appendChild(todoItemCalendarIcon);
-
-         const todoItemCategory = document.createElement('div');
-         todoItemCategory.classList.add('todo-item__category', `todo-item__${content.items[i].category.style}`);
-
-         const todoItemProject = document.createElement('div');
-         todoItemProject.classList.add('todo-item__project');
-         todoItemProject.textContent = '#';
-
-         const todoItemProjectSelect = document.createElement('select');
-
-         content.projects.forEach(element => {
-            // console.log(element);
-            const todoItemProjectSelectOption = document.createElement('option');
-            if (content.items[i].project === element.id) {
-               todoItemProjectSelectOption.selected = true;
-            }
-            todoItemProjectSelectOption.textContent = element.title;
-            todoItemProjectSelect.append(todoItemProjectSelectOption);
-         });
-
-         todoItemProject.appendChild(todoItemProjectSelect);
-
-
-         const todoItemBlanket = document.createElement('div');
-         todoItemBlanket.classList.add('todo-item__blanket');
-
-         const todoItemDeleteDiv = document.createElement('div');
-         todoItemDeleteDiv.classList.add('todo-item__delete');
-
-         const todoItemDeleteIcon = document.createElement('i');
-         todoItemDeleteIcon.classList.add('far', 'fa-trash-alt');
-
-         todoItemDeleteDiv.appendChild(todoItemDeleteIcon);
-
-         todoItemPanel.append(todoItemCalendarDiv, todoItemCategory, todoItemProject, todoItemBlanket, todoItemDeleteDiv);
-
-         pageTodoItem.append(todoItemDone, todoItemTitle, todoItemImportanceDiv, todoItemPanel);
-
-
-         pageList.appendChild(pageTodoItem);
-
-      }
-
-      pageInner.appendChild(pageList);
-
-      elementDOM.appendChild(pageInner);
-
-      handleEvents();
+      return pageList;
    }
 
-   const handleEvents = function () {
-
-      // console.log('handle events запустился');
-
-      const todoItemAll = document.querySelectorAll('.page__todo-item');
-
-      todoItemAll.forEach(element => {
-
-         element.addEventListener('click', (event) => {
-
-            if (event.target.classList.contains('fa-trash-alt')) {
-               verifyDeleteTodoCard(event.currentTarget);
-               return;
-            }
-
-            todoItemAll.forEach(item => {
-               collapseToDoCard(item);
-            });
-
-            expandToDoCard(event.currentTarget);
+   function createTodoItem(item, projects) {
+      const todoItem = document.createElement('li');
+      todoItem.classList.add('page__todo-item', 'todo-item');
+      todoItem.setAttribute('id', item.id);
 
 
-         });
-      })
+      todoItem.append(createDoneDiv(), createTitleTextArea(item.title), createImportanceDiv(item.priority), createPanel(item, projects));
 
-      function expandToDoCard(element) {
-         element.classList.add('page__todo-item--active');
+      return todoItem;
+   }
 
-         const todoItemTitle = element.querySelector('.todo-item__title');
-         const todoItemBlanket = element.querySelector('.todo-item__blanket');
-         const todoItemDeleteDiv = element.querySelector('.todo-item__delete');
+   function createDoneDiv() {
+      const doneDiv = document.createElement('div');
+      doneDiv.classList.add('todo-item__done');
+      return doneDiv;
+   }
 
+   function createTitleTextArea(title) {
+      const titleTextArea = document.createElement('textarea');
+      titleTextArea.classList.add('todo-item__title');
+      titleTextArea.textContent = title;
+      return titleTextArea;
+   }
 
-         const todoItemDescription = document.createElement('textarea');
-         todoItemDescription.textContent = 'Description of the item';
-         todoItemDescription.classList.add('todo-item__description');
-         // todoItemTitle.textContent = `${content.items[i].description}`;
+   function createImportanceDiv(priority) {
+      const importanceDiv = document.createElement('div');
+      importanceDiv.classList.add('todo-item__importance');
 
-         todoItemTitle.insertAdjacentElement('afterend', todoItemDescription);
+      const importanceIcon = document.createElement('i');
+      importanceIcon.classList.add('fas', 'fa-exclamation');
+      if (priority) importanceIcon.classList.add('fa-exclamation--important');
 
-         const todoItemSaveDiv = document.createElement('div');
-         todoItemSaveDiv.className = 'todo-item__save';
-         const todoItemSaveButton = document.createElement('button');
-         todoItemSaveButton.classList.add('btn');
-         todoItemSaveButton.textContent = 'SAVE';
+      importanceDiv.appendChild(importanceIcon);
+      return importanceDiv;
+   }
 
-         todoItemSaveDiv.appendChild(todoItemSaveButton);
+   function createPanel(item, projects) {
+      const panelDiv = document.createElement('div');
+      panelDiv.classList.add('todo-item__panel');
 
-         if (todoItemBlanket) {
-            todoItemBlanket.remove();
-         }
+      panelDiv.append(createCalendarDiv(), createCategoryDiv(item), createProjectSelect(item, projects), createBlanketDiv(), createDeleteDiv());
 
-         todoItemDeleteDiv.insertAdjacentElement('beforebegin', todoItemSaveDiv);
+      return panelDiv;
+   }
 
-         // todoItemPanel.insertBefore(todoItemSaveDiv, todoItemDeleteDiv);
+   function createCalendarDiv() {
+      const calendarDiv = document.createElement('div');
+      calendarDiv.classList.add('todo-item__calendar');
+
+      const calendarIcon = document.createElement('i');
+      calendarIcon.classList.add('far', 'fa-calendar-alt');
+
+      calendarDiv.appendChild(calendarIcon);
+      return calendarDiv;
+   }
+
+   function createCategoryDiv(item) {
+      const categoryDiv = document.createElement('div');
+      categoryDiv.classList.add('todo-item__category', `todo-item__${item.category.style}`);
+      return categoryDiv;
+   }
+
+   function createProjectSelect(item, projects) {
+      const projectDiv = document.createElement('div');
+      projectDiv.classList.add('todo-item__project');
+
+      const projectSelect = document.createElement('select');
+      projects.forEach(project => {
+         const option = document.createElement('option');
+         if (item.project === project.id) option.selected = true;
+         option.textContent = project.title;
+         projectSelect.append(option);
+      });
+
+      projectDiv.appendChild(projectSelect);
+      return projectDiv;
+   }
+
+   function createBlanketDiv() {
+      const blanketDiv = document.createElement('div');
+      blanketDiv.classList.add('todo-item__blanket');
+      return blanketDiv;
+   }
+
+   function createDeleteDiv() {
+      const deleteDiv = document.createElement('div');
+      deleteDiv.classList.add('todo-item__delete');
+
+      const deleteIcon = document.createElement('i');
+      deleteIcon.classList.add('far', 'fa-trash-alt');
+      deleteDiv.appendChild(deleteIcon);
+
+      return deleteDiv;
+   }
+
+   function attachEventListeners() {
+      const todoItems = document.querySelectorAll('.page__todo-item');
+      todoItems.forEach(item => {
+         item.addEventListener('click', handleItemClick);
+      });
+
+      const newElementButton = ScreenContoller.widgetButton;
+      newElementButton.addEventListener('click', addNewCard);
+   }
+
+   function handleItemClick(event) {
+      const targetItem = event.currentTarget;
+
+      if (event.target.classList.contains('fa-trash-alt')) {
+         verifyDeleteTodoCard(targetItem);
+         return;
       }
 
-      function collapseToDoCard(element) {
-         element.classList.remove('page__todo-item--active');
+      collapseAllCards();
+      expandCard(targetItem);
+   }
 
-         const todoItemDescription = element.querySelector('.todo-item__description');
-         if (todoItemDescription) {
-            todoItemDescription.remove();
-         }
+   function collapseAllCards() {
+      const allItems = document.querySelectorAll('.page__todo-item');
+      allItems.forEach(item => collapseCard(item));
+   }
 
-         const todoItemSaveDiv = element.querySelector('.todo-item__save');
-         if (todoItemSaveDiv) {
-            todoItemSaveDiv.remove();
-         }
+   function expandCard(item) {
+      item.classList.add('page__todo-item--active');
+      const titleElement = item.querySelector('.todo-item__title');
 
-         //const todoItemPanel = element.querySelector('.todo-item__panel');
-         const todoItemDeleteDiv = element.querySelector('.todo-item__delete');
+      const description = document.createElement('textarea');
+      description.classList.add('todo-item__description');
+      description.textContent = 'Description of the item';
+      titleElement.insertAdjacentElement('afterend', description);
 
-         if (!element.querySelector('.todo-item__blanket')) {
+      const saveDiv = document.createElement('div');
+      saveDiv.className = 'todo-item__save';
+      const saveButton = document.createElement('button');
+      saveButton.classList.add('btn');
+      saveButton.textContent = 'SAVE';
+      saveDiv.appendChild(saveButton);
 
-            // console.log('blanket нет');
+      const blanket = item.querySelector('.todo-item__blanket');
+      if (blanket) blanket.remove();
 
-            const todoItemBlanket = document.createElement('div');
-            todoItemBlanket.classList.add('todo-item__blanket');
+      const deleteDiv = item.querySelector('.todo-item__delete');
+      deleteDiv.insertAdjacentElement('beforebegin', saveDiv);
+   }
 
-            todoItemDeleteDiv.insertAdjacentElement('beforebegin', todoItemBlanket);
-         }
+   function collapseCard(item) {
+      item.classList.remove('page__todo-item--active');
+      const description = item.querySelector('.todo-item__description');
+      if (description) description.remove();
+
+      const saveDiv = item.querySelector('.todo-item__save');
+      if (saveDiv) saveDiv.remove();
+
+      const deleteDiv = item.querySelector('.todo-item__delete');
+      if (!item.querySelector('.todo-item__blanket')) {
+         const blanketDiv = createBlanketDiv();
+         deleteDiv.insertAdjacentElement('beforebegin', blanketDiv);
       }
+   }
 
-      function verifyDeleteTodoCard(element) {
-
-         const popup = document.createElement('div');
-         popup.classList.add('popup');
-
-         const popupBlock = document.createElement('div');
-         popupBlock.classList.add('popup__block');
-
-         const popupText = document.createElement('p');
-         popupText.classList.add('popup__text');
-         popupText.textContent = 'Delete this todo card?';
-
-         const popupChoose = document.createElement('div');
-         popupChoose.classList.add('popup__choose');
-
-         const popupCancelBtn = document.createElement('button');
-         popupCancelBtn.classList.add('popup__cancel', 'btn', 'btn--grey')
-         popupCancelBtn.textContent = 'Cancel';
-
-         const popupDeleteBtn = document.createElement('button');
-         popupDeleteBtn.classList.add('popup__delete', 'btn')
-         popupDeleteBtn.textContent = 'Delete';
-
-         popupChoose.append(popupCancelBtn, popupDeleteBtn);
-
-         popupBlock.append(popupText, popupChoose);
-
-         popup.appendChild(popupBlock);
-
-         const main = document.querySelector('main');
-
-         main.appendChild(popup);
-
-         handleClicks();
-
-         function handleClicks() {
-            popup.addEventListener('click', (event) => {
-               if (event.target.classList.contains('popup__delete')) {
-
-                  console.log('Картока удалена!');
-               } else if (!event.target.classList.contains('popup__block') || event.target.classList.contains('popup__cancel')) {
-                  popup.remove();
-               }
-            })
-         }
-
-
-      };
+   const addNewCard = () => {
+      console.log('добавить карточку');
 
    }
 
-   return { renderPage, handleEvents };
+
+   function createPopupChooseButton(classes, text) {
+      const popupBtn = document.createElement('button');
+      popupBtn.classList.add(...classes);
+      popupBtn.textContent = text;
+      return popupBtn;
+   }
+
+   function verifyDeleteTodoCard(element) {
+
+      const popupCancelBtn = components.createButton(['popup__cancel', 'btn', 'btn--grey'], 'Cancel');
+      const popupDeleteBtn = createPopupChooseButton(['popup__delete', 'btn'], 'Delete');
+
+      const popup = createPopup('Delete this todo card?', [popupCancelBtn, popupDeleteBtn]);
+
+
+
+      handleClicks(element);
+
+      function handleClicks(element) {
+         popup.addEventListener('click', (event) => {
+            if (event.target.classList.contains('popup__delete')) {
+
+               console.log('Карточка удалена!:', element.id);
+
+               ScreenContoller.sendChangesToApp('remove', 'items', element.id);
+
+               element.remove();
+               popup.remove();
+
+            } else if (!event.target.classList.contains('popup__block') || event.target.classList.contains('popup__cancel')) {
+               popup.remove();
+            }
+         })
+      }
+
+
+   };
+
+
+   function sendUpdatedDataToScreenController() {
+
+   }
+
+   return { renderPage, attachEventListeners };
 
 }
 

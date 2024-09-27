@@ -80,6 +80,11 @@ textarea::-webkit-resizer {
 .wrapper--sidepanel-active {
   grid-template-columns: fit-content(150px) auto;
 }
+@media (max-width: 600px) {
+  .wrapper--sidepanel-active {
+    grid-template-columns: 0px auto;
+  }
+}
 
 [class*=__container] {
   max-width: 1440px;
@@ -226,6 +231,7 @@ textarea::-webkit-resizer {
   background-color: #f8f0fb;
   transform: translateX(-100%);
   transition: all 0.3s ease 0s;
+  overflow: hidden;
   /* .sidepanel__nav */
   /* .sidepanel__priorities */
   /* .sidepanel__item */
@@ -238,10 +244,21 @@ textarea::-webkit-resizer {
   /* .sidepanel__projects */
   /* .sidepanel__notes */
 }
+@media (max-width: 479.98px) {
+  .sidepanel {
+    width: 100%;
+    max-width: unset;
+  }
+}
 .sidepanel--active {
   width: -moz-fit-content;
   width: fit-content;
   transform: translateX(0);
+}
+@media (max-width: 479.98px) {
+  .sidepanel--active {
+    width: 100vw;
+  }
 }
 .sidepanel__nav:not(:last-child) {
   margin-bottom: 10px;
@@ -252,6 +269,13 @@ textarea::-webkit-resizer {
 .sidepanel__filter {
   display: grid;
   align-items: center;
+}
+.sidepanel__item {
+  text-overflow: ellipsis;
+}
+.sidepanel__item {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .sidepanel__item--category {
   position: relative;
@@ -375,6 +399,9 @@ textarea::-webkit-resizer {
 }
 .todo-item__project select, .todo-item__project option {
   font-weight: 300;
+  max-width: 153px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .todo-item__importance {
   grid-row: 3/4;

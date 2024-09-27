@@ -18,9 +18,29 @@ export default class ToDoList {
       return item;
    }
 
+   removeItemFromList(id) {
+      let currentList = this.getItemsList();
+
+      console.log('currentList:', currentList);
+
+      let processedList = currentList.filter(item => item.id != id);
+
+      console.log('processedList:', processedList);
+
+      this.updateList(processedList);
+
+
+   }
+
    addItemToList(itemToDo) {
       this.#itemsList.push(itemToDo);
       this.getItemsList();
+   }
+
+   updateList(processedList) {
+      this.#itemsList = processedList;
+
+      console.log('список обновлен:', processedList);
    }
 
 }

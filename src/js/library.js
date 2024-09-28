@@ -13,7 +13,16 @@ export default class ToDoList {
       return this.#itemsCounter;
    }
 
-   createItem(id, title, description, dueDate, category, project, priority, status) {
+   createItem(
+      id = this.getItemsCounter(),
+      title = 'Title',
+      description = 'Place your description here',
+      dueDate,
+      category = category0,
+      project = 0,
+      priority = false,
+      status = true
+   ) {
       let item = new ItemToDo(id, title, description, dueDate, category, project, priority, status);
       return item;
    }
@@ -45,11 +54,12 @@ export default class ToDoList {
 
 }
 
+const category0 = new Category(0, 'None', '');
 const category1 = new Category(1, 'Personal', 'category--personal');
 const category2 = new Category(2, 'Family', 'category--family');
 const category3 = new Category(3, 'Work', 'category--work');
 
-export const categories = [category1, category2, category3];
+export const categories = [category0, category1, category2, category3];
 
 export class ProjectsList {
    #projectsList = [];

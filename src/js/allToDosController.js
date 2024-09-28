@@ -5,6 +5,9 @@ import components from "./componentFactory";
 function allToDosController() {
 
    const renderPage = function (elementDOM, content) {
+
+      deleteOldInner();
+
       const pageInner = createPageInner();
       const pageList = createPageList(content.items, content.projects);
 
@@ -13,6 +16,11 @@ function allToDosController() {
 
       attachEventListeners();
    };
+
+   function deleteOldInner() {
+      let pageOldInner = document.querySelector('.page__inner');
+      if (pageOldInner) { pageOldInner.remove() };
+   }
 
    function createPageInner() {
       const pageInner = document.createElement('div');
@@ -194,6 +202,8 @@ function allToDosController() {
 
    const addNewCard = () => {
       console.log('добавить карточку');
+      // createTodoItem(ScreenContoller.doQueryToDb('createNewTodoItem'), );
+      ScreenContoller.sendChangesToApp('createNewItem', 'todo', null);
 
    }
 

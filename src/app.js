@@ -14,20 +14,27 @@ export default class App {
    static onDomContentLoaded() {
       // console.log("Dom загружен");
       ScreenContoller.onDomContentLoaded();
-      App.getDataFromDb();
+      App.sendDataToScreen();
    }
 
    static getDataFromDb() {
       // console.log('Данные получены:', DataController.getDataFromLibrary());
       const dataFromDb = DataController.getDataFromLibrary();
+      return dataFromDb
+   }
 
-      ScreenContoller.renderDataOnScreen(dataFromDb);
+   static sendDataToScreen() {
+      ScreenContoller.renderDataOnScreen(App.getDataFromDb());
    }
 
 
    static updateDb(action, entity, element) {
       DataController.sendDataToLs(action, entity, element);
       // this.getDataFromDb();
+      if (action != 'remove') {
+         App.sendDataToScreen();
+      }
+
    }
 
 

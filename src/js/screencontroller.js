@@ -1,6 +1,7 @@
 import allTodos from "./allToDosController";
 import { ProjectsList } from "./library";
 import App from '../app';
+import DataController from "./db";
 
 export default class ScreenContoller {
 
@@ -56,6 +57,18 @@ export default class ScreenContoller {
          }
       });
    }
+
+   // static doQueryToDb(query) {
+
+   //    let result;
+
+   //    if (query == 'createNewTodoItem') {
+   //       result = DataController.createNewEntity();
+   //       console.log('result:', result);
+   //    }
+
+   //    return result;
+   // }
 
    static sendChangesToApp(action, entity, data) {
       App.updateDb(action, entity, data);

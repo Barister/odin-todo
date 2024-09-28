@@ -18,12 +18,14 @@ export default class DataController {
    }
 
    static sendDataToLs(action, entity, element) {
-      let dataFromLibrary = this.getDataFromLibrary();
+      // let dataFromLibrary = this.getDataFromLibrary();
 
       if (action == 'remove') {
          toDoListLibrary.removeItemFromList(element);
+      } else if (action == 'createNewItem' && entity == 'todo') {
+         let newItem = toDoListLibrary.createItem();
+         toDoListLibrary.addItemToList(newItem);
       }
-
 
       console.log('ОТправляем новые данные в локальное хранилище!');
 
@@ -33,4 +35,10 @@ export default class DataController {
       console.log('Данные получены из локального хранилища');
 
    }
+
+   static getNewId() {
+      return toDoListLibrary.getItemsCounter();
+   }
+
+
 }

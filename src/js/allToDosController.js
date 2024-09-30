@@ -4,12 +4,15 @@ import components from "./componentFactory";
 
 function allToDosController() {
 
-   const renderPage = function (elementDOM, content) {
+   const renderPage = function (elementDOM, [items, projects]) {
 
       deleteOldInner();
 
+
       const pageInner = createPageInner();
-      const pageList = createPageList(content.items, content.projects);
+      const pageList = createPageList(items, projects);
+
+      console.log("items, projects:", items, projects);
 
       pageInner.appendChild(pageList);
       elementDOM.appendChild(pageInner);
@@ -31,6 +34,8 @@ function allToDosController() {
    function createPageList(items, projects) {
       const pageList = document.createElement('ul');
       pageList.classList.add('page__list');
+
+
 
       items.forEach(item => {
          const todoItem = createTodoItem(item, projects);
@@ -202,8 +207,8 @@ function allToDosController() {
 
    const addNewCard = () => {
       console.log('добавить карточку');
-      // createTodoItem(ScreenContoller.doQueryToDb('createNewTodoItem'), );
-      ScreenContoller.sendChangesToApp('createNewItem', 'todo', null);
+
+      ScreenContoller.sendChangesToLibrary('createNewItem', 'todo', null);
 
    }
 
@@ -232,7 +237,7 @@ function allToDosController() {
 
                console.log('Карточка удалена!:', element.id);
 
-               ScreenContoller.sendChangesToApp('remove', 'items', element.id);
+               ScreenContoller.sendChangesToLibrary('remove', 'todo', element.id);
 
                element.remove();
                popup.remove();
@@ -246,10 +251,6 @@ function allToDosController() {
 
    };
 
-
-   function sendUpdatedDataToScreenController() {
-
-   }
 
    return { renderPage, attachEventListeners };
 

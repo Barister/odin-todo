@@ -1,7 +1,7 @@
 import allTodos from "./allToDosController";
-import { ProjectsList } from "./library";
+import { toDoListLibrary, ProjectsList, projectsLibrary } from "./library";
 import App from '../app';
-import DataController from "./db";
+import DbController from "./db";
 
 export default class ScreenContoller {
 
@@ -17,7 +17,8 @@ export default class ScreenContoller {
 
    static onDomContentLoaded() {
       this.cacheDom();
-      ScreenContoller.handleEvents();
+      this.renderDataOnScreen();
+      this.handleEvents();
    }
 
    static handleEvents() {
@@ -32,15 +33,25 @@ export default class ScreenContoller {
       this.wrapper.classList.toggle('wrapper--sidepanel-active');
    }
 
-   static renderDataOnScreen(dataFromDb) {
-      console.log('dataFromDb:', dataFromDb);
+   static renderDataOnScreen() {
 
-      this.renderProjectsToSidepanel(dataFromDb.projects);
+      let itemsFromLibrary = toDoListLibrary.getItemsList();
+      let projectsFromLibrary = projectsLibrary.getProjectsList();
 
-      allTodos.renderPage(this.pageContainer, dataFromDb);
+      console.log('items из library?:', itemsFromLibrary);
+
+      this.renderProjectsToSidepanel(projectsFromLibrary);
+
+      allTodos.renderPage(this.pageContainer, [itemsFromLibrary, projectsFromLibrary]);
+   }
+
+   static clearProjectsToSidepanel() {
+      this.sidePanelProjects.innerHTML = '';
    }
 
    static renderProjectsToSidepanel(projects) {
+
+      this.clearProjectsToSidepanel();
 
       projects.forEach(element => {
          if (element.id !== 1) {
@@ -58,20 +69,22 @@ export default class ScreenContoller {
       });
    }
 
-   // static doQueryToDb(query) {
+   static sendChangesToLibrary(action, entity, data) {
+      if (action == 'remove' && entity == 'todo') {
+         this.handleDeleteTodo(data);
+      } else if (action == 'createNewItem' && entity == 'todo') {
+         this.handleCreateTodo();
+      }
+      this.renderDataOnScreen();
+   }
 
-   //    let result;
+   static handleDeleteTodo(id) {
+      toDoListLibrary.removeItemFromList(id);
+   }
 
-   //    if (query == 'createNewTodoItem') {
-   //       result = DataController.createNewEntity();
-   //       console.log('result:', result);
-   //    }
-
-   //    return result;
-   // }
-
-   static sendChangesToApp(action, entity, data) {
-      App.updateDb(action, entity, data);
+   static handleCreateTodo() {
+      let newTodo = toDoListLibrary.createItem();
+      toDoListLibrary.addItemToList(newTodo);
    }
 }
 

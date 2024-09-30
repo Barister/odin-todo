@@ -390,6 +390,7 @@ textarea::-webkit-resizer {
    &__container {
       max-width: 90ch;
       margin-top: 5%;
+      margin-bottom: 40px;
    }
 
    /* .page__title */
@@ -437,9 +438,9 @@ textarea::-webkit-resizer {
    }
 
    &__widget {
-      position: absolute;
-      right: 5%;
-      bottom: 5%;
+      position: fixed;
+      right: clamp(20px, 4vw, 50px);
+      bottom: clamp(20px, 4vw, 50px);
       font-size: 28px;
       line-height: 1;
    }

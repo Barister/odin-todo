@@ -320,6 +320,7 @@ textarea::-webkit-resizer {
 .page__container {
   max-width: 90ch;
   margin-top: 5%;
+  margin-bottom: 40px;
 }
 .page__todo-item {
   display: grid;
@@ -341,9 +342,9 @@ textarea::-webkit-resizer {
   box-shadow: 0px 0px 3px 2px #cad4ca;
 }
 .page__widget {
-  position: absolute;
-  right: 5%;
-  bottom: 5%;
+  position: fixed;
+  right: clamp(20px, 4vw, 50px);
+  bottom: clamp(20px, 4vw, 50px);
   font-size: 28px;
   line-height: 1;
 }

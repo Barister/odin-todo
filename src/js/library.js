@@ -1,10 +1,18 @@
 import ItemToDo, { Category, Project } from "./entities.js";
+import DbController from "./db.js";
 
 export default class ToDoList {
    #itemsList = [];
    #itemsCounter = 0;
 
+   getDataFromDb() {
+      const data = DbController.getDataFromLs() || { items: [] };
+      this.#itemsList = data.items;  // Загружаем данные в #itemsList
+      console.log('Loaded items from DB:', this.#itemsList);
+   }
+
    getItemsList() {
+      console.log('toDoList:', this.#itemsList);
       return this.#itemsList;
    }
 
@@ -38,18 +46,24 @@ export default class ToDoList {
 
       this.updateList(processedList);
 
+      this.sendDatatoDb();
 
    }
 
    addItemToList(itemToDo) {
       this.#itemsList.push(itemToDo);
       this.getItemsList();
+      this.sendDatatoDb();
    }
 
    updateList(processedList) {
       this.#itemsList = processedList;
 
       console.log('список обновлен:', processedList);
+   }
+
+   sendDatatoDb() {
+      DbController.saveDataToLs({ items: this.#itemsList });
    }
 
 }
@@ -89,15 +103,21 @@ export class ProjectsList {
 const toDoListLibrary = new ToDoList();
 const projectsLibrary = new ProjectsList();
 
+toDoListLibrary.getDataFromDb();
 
-toDoListLibrary.addItemToList(toDoListLibrary.createItem(toDoListLibrary.getItemsCounter(), 'To finish all todos page', 'Description of the task', 'pending', category1, 2, true, true));
+if (toDoListLibrary.getItemsList().length === 0) {
+   toDoListLibrary.addItemToList(toDoListLibrary.createItem(toDoListLibrary.getItemsCounter(), 'To finish all todos page', 'Description of the task', 'pending', category1, 2, true, true));
 
-toDoListLibrary.addItemToList(toDoListLibrary.createItem(toDoListLibrary.getItemsCounter(), 'Go to the park', 'Description of the task', 'pending', category2, 3, false, true));
+   toDoListLibrary.addItemToList(toDoListLibrary.createItem(toDoListLibrary.getItemsCounter(), 'Go to the park', 'Description of the task', 'pending', category2, 3, false, true));
 
-projectsLibrary.addProjectToList(projectsLibrary.createProject(projectsLibrary.getProjectsCounter(), '', '', null, true));
+   projectsLibrary.addProjectToList(projectsLibrary.createProject(projectsLibrary.getProjectsCounter(), '', '', null, true));
 
-projectsLibrary.addProjectToList(projectsLibrary.createProject(projectsLibrary.getProjectsCounter(), 'The Odin Project', '', 1, true));
+   projectsLibrary.addProjectToList(projectsLibrary.createProject(projectsLibrary.getProjectsCounter(), 'The Odin Project', '', 1, true));
 
-projectsLibrary.addProjectToList(projectsLibrary.createProject(projectsLibrary.getProjectsCounter(), 'Family journey', '', 2, true));
+   projectsLibrary.addProjectToList(projectsLibrary.createProject(projectsLibrary.getProjectsCounter(), 'Family journey', '', 2, true));
+}
+
+
+
 
 export { toDoListLibrary, projectsLibrary };
